@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import contractABI from "./contractABI.json";
 
 const contractAddress = "0x70e125384205c3556c14954274dac86C170912Ee";
-
 function App() {
   const [account, setAccount] = useState(null);
   const [isWalletInstalled, setIsWalletInstalled] = useState(false);
@@ -36,7 +35,7 @@ function App() {
         setAccount(accounts[0]);
       })
       .catch((error) => {
-        alert("Something went wrong");
+        alert(error.reason);
       });
   }
 
@@ -73,7 +72,7 @@ function App() {
       const response = await NFTContract.withdrawMoney();
       console.log("Received: ", response);
     } catch (err) {
-      alert(err);
+      alert(err.reason);
     }
   }
 
@@ -84,7 +83,7 @@ function App() {
       const response = await NFTContract.mintNFT(tokenURI, options);
       console.log("Received: ", response);
     } catch (err) {
-      alert(err.reason);
+      alert(err.data.message);
     } finally {
       setIsMinting(false);
     }
@@ -100,6 +99,8 @@ function App() {
             <h1>NFT Marketplace</h1>
             <span id="network">
               <strong>* Contract is deployed on polygon_mumbai testnet</strong>
+              <br /> Get test matic token from{" "}
+              <a href="https://faucet.polygon.technology/" target={"_blank"}>Here</a>
             </span>
           </div>
           <p>Buy an NFT from our marketplace.</p>
